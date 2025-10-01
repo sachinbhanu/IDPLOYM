@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Launching Soon</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Manrope:700,400&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Manrope', sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      background: rgba(25, 25, 25, 0.9);
+      border-radius: 30px;
+      box-shadow: 0 12px 24px 0 rgba(106, 17, 203, .2);
+      padding: 40px 25px 48px 25px;
+      backdrop-filter: blur(2px);
+      animation: fadeIn 1.2s;
+    }
+    h1 {
+      font-size: 2.4em;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #ffeca1 30%, #98f6ff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: popHeader 0.9s;
+    }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 28px;
+    }
+    .timer-box {
+      background: linear-gradient(145deg, #2575fc 60%, #6a11cb 100%);
+      border-radius: 18px;
+      padding: 20px 10px;
+      min-width: 80px;
+      box-shadow: 0 0 24px 0 rgba(106, 17, 203, .2);
+      transition: background 0.4s;
+    }
+    .timer-box span {
+      display: block;
+      font-size: 2.1em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #6a11cb, 0 0 2px #fff;
+      animation: digitFlip 1s infinite alternate;
+    }
+    .label {
+      font-size: 0.8em;
+      margin-top: 6px;
+      letter-spacing: 1px;
+      color: #ffeca1;
+      opacity: 0.84;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0px); }
+    }
+    @keyframes popHeader {
+      from { opacity: 0; scale: 0.7; }
+      to { opacity: 1; scale: 1; }
+    }
+    @keyframes digitFlip {
+      from { transform: rotateX(0deg);}
+      to { transform: rotateX(10deg);}
+    }
+    .launched {
+      font-size: 2em;
+      color: #ffd500;
+      animation: pulse 1.5s infinite alternate;
+    }
+    @keyframes pulse {
+      from { opacity: 0.5;}
+      to { opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Launching Soon!</h1>
+    <p style="margin-bottom: 10px;font-size:1.25em;">We are coming soon with tonnes of services:</p>
+    <div class="countdown" id="countdown">
+      <div class="timer-box">
+        <span id="days">00</span>
+        <div class="label">Days</div>
+      </div>
+      <div class="timer-box">
+        <span id="hours">00</span>
+        <div class="label">Hours</div>
+      </div>
+      <div class="timer-box">
+        <span id="minutes">00</span>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="timer-box">
+        <span id="seconds">00</span>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+    <div id="launched" style="display:none;" class="launched">We are live!</div>
+  </div>
+  <script>
+    // Set launch date
+    const launchDate = new Date("October 30, 2025 00:00:00").getTime();
+    const daysNode = document.getElementById("days");
+    const hoursNode = document.getElementById("hours");
+    const minutesNode = document.getElementById("minutes");
+    const secondsNode = document.getElementById("seconds");
+    const launchedNode = document.getElementById("launched");
+    const countdownNode = document.getElementById("countdown");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+      if (distance <= 0) {
+        countdownNode.style.display = "none";
+        launchedNode.style.display = "block";
+        return;
+      }
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      daysNode.textContent = String(days).padStart(2, "0");
+      hoursNode.textContent = String(hours).padStart(2, "0");
+      minutesNode.textContent = String(minutes).padStart(2, "0");
+      secondsNode.textContent = String(seconds).padStart(2, "0");
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
